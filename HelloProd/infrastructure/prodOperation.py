@@ -27,7 +27,6 @@ class Prod:
             return False
 
     def update(self, data):
-        print(data)
         try:
             prod = MyProd.objects.get(name=data["name"])
             serializer = ProdSerializer(data=data)
