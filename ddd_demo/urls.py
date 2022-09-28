@@ -14,13 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include
-from django.urls import path
+from django.urls import include, path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view as swagger_get_schema_view
 
 from HelloProd import urls as helloprod_urls
+
+schema_view = swagger_get_schema_view(
+    openapi.Info(
+        title="Django DDD Demo",
+        default_version="0.0.1",
+        description="For Wistron EA academy use only",
+    ),
+    public=True,
+)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/prod_mgt", include(helloprod_urls)),
+    path(
+        "api/swagger/schema/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="swagger-schema",
+    ),
 ]
