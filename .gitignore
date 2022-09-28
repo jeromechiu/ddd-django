@@ -228,3 +228,4 @@ cython_debug/
 
 db.*
 .pre-commit-config.yaml
+.flake8
