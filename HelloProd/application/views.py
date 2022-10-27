@@ -31,11 +31,18 @@ class ProdApiView(APIView):
     )
     def get(self, request):
         data = dict()
-        pid = request.GET.get("pid", None)
-        if pid is None:
+
+        pids = request.GET.keys()
+        if not bool(pids):
             data["data"] = Prod().get_all()
         else:
-            data["data"] = Prod().get_one(pid)
+            pid = request.GET.get("pid", None)
+            if pid is None:
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN, data="Incorrect parameters"
+                )
+            else:
+                data["data"] = Prod().get_one(pid)
 
         return Response(data=data, status=status.HTTP_200_OK)
 
@@ -59,7 +66,9 @@ class ProdApiView(APIView):
         if prod.delete_single_prod(pid):
             return Response(status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                status=status.HTTP_403_FORBIDDEN, data="Product is not deletable"
+            )
 
     @swagger_auto_schema(
         operation_summary="Update a product.",

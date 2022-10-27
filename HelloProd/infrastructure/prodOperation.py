@@ -1,4 +1,5 @@
 from django.core import exceptions
+
 from .models import MyProd
 from .ProdSerializer import ProdSerializer
 
@@ -33,8 +34,7 @@ class Prod:
             if not serializer.is_valid():
                 raise exceptions.ValidationError("Payload invalid")
             else:
-                serializer.update(
-                    instance=prod, validated_data=serializer.data)
+                serializer.update(instance=prod, validated_data=serializer.data)
                 return True
 
         except MyProd.DoesNotExist:
@@ -47,10 +47,10 @@ class Prod:
         except MyProd.DoesNotExist:
             return False
 
-    def delete_able(self, pid):
+    def deletable(self, pid):
         try:
             prod = MyProd.objects.get(pid=pid)
-            if prod.delete_able:
+            if prod.deletable:
                 return True
             else:
                 return False

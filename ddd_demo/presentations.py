@@ -18,7 +18,7 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
 
-from HelloProd import urls as helloprod_urls
+from HelloProd import presentations as helloprod_urls
 
 schema_view = swagger_get_schema_view(
     openapi.Info(
@@ -32,7 +32,7 @@ schema_view = swagger_get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/prod_mgt", include(helloprod_urls)),
+    path("api/prods", include(helloprod_urls)),
     path(
         "api/swagger/schema/",
         schema_view.with_ui("swagger", cache_timeout=0),

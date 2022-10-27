@@ -6,7 +6,7 @@ class ProdMagament:
         self.prod = Prod
 
     def delete_single_prod(self, pid):
-        if self.prod().delete_able(pid):
+        if self.prod().deletable(pid):
             self.prod().delete(pid)
             return True
         else:
